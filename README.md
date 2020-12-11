@@ -27,7 +27,6 @@ Esse projeto foi desenvolvido com as seguintes tecnologias:
 - [ReactJS](https://github.com/facebook/react)
 - [TypeScript](https://github.com/microsoft/TypeScript)
 - [styled-components](https://github.com/styled-components/styled-components)
-- [axios](https://github.com/axios/axios)
 - [ESLint](https://github.com/eslint/eslint)
 - [Prettier](https://github.com/prettier/prettier)
 <br/>
