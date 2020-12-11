@@ -3,8 +3,6 @@ import { useHistory } from 'react-router-dom';
 import { BiShoppingBag } from 'react-icons/bi';
 import { Container, CartButton, CartButtonText } from './styles';
 
-import formatMoney from '../../utils/formatMoney';
-
 import { useCart } from '../../hooks/cart';
 
 // Calculo do total
