@@ -1,26 +1,40 @@
 import { createGlobalStyle } from 'styled-components';
-
+import 'react-toastify/dist/ReactToastify.css';
 
 export default createGlobalStyle`
-  @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
-
   * {
     margin: 0;
     padding: 0;
     outline: 0;
     box-sizing: border-box;
+
+    &::-webkit-scrollbar {
+      width: 10px;
+      background-color: #c53030;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: #fff;
+    }
+    &::-webkit-scrollbar-track {
+      background-color: #c53030;
+    }
+
   }
 
   body {
     background: #191920;
     -webkit-font-smoothing: antialiased !important;
+    font-family: 'Roboto', sans-serif;
   }
 
   body, input, button {
     font: 14px sans-serif;
+    font-family: 'Roboto', sans-serif;
   }
   a {
     text-decoration: none;
+    font-family: 'Roboto', sans-serif;
   }
 
   #root {

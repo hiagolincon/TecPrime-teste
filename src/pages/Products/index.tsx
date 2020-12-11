@@ -1,16 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
+import { useLocation } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { MdArrowBack } from 'react-icons/md';
 import api from '../../services/api';
 import { useCart } from '../../hooks/cart';
 
 import FloatingCart from '../../components/FloatingCart';
 
-import { ProductList } from './styles';
-import {RouteComponentProps} from "react-router";
-import { withRouter } from 'react-router-dom';
+import { ProductList, HeaderContainer } from './styles';
 import Header from '../../components/Header';
+import formatMoney from '../../utils/formatMoney';
+import Loading from '../../components/Loading';
 
-interface IProduct {
+interface ProductProp {
   id: string;
   nome: string;
   descricao: string;
@@ -19,59 +22,75 @@ interface IProduct {
   quantidade: number;
 }
 
-interface IProps extends RouteComponentProps {
-
-};
-
-const ProductsComponent: React.FC<IProps> = ({ location }) => {
-  const [products, setProducts] = useState<IProduct[]>([]);
-  const { id } = location;
-  console.log()
+const Products: React.FC = () => {
+  const [products, setProducts] = useState<ProductProp[]>([]);
+  const [loading, setLoading] = useState(true);
+  const location = useLocation();
+  const { id } = location.state;
   const { addToCart } = useCart();
 
   useEffect(() => {
-    async function loadProducts () {
-      const response = await api.post('/products', {
-        category: id
-      });
+    const loadProducts = async (): Promise<void> => {
+      try {
+        const response = await api.post('/products', {
+          category: id,
+        });
+        setProducts(response.data);
+        // setTimeout usado somente para a demonstraçao melhor do login
+        setTimeout(() => {
+          setLoading(false);
+        }, 2000);
+      } catch (error) {
+        toast.error(
+          'Erro ao listar produtos, por favor tente novamente mais tarde.'
+        );
+      }
+    };
 
-      setProducts(response.data);
-    }
+    loadProducts();
+  }, [id]);
 
-    loadProducts()
-  }, [])
+  const handleAddToCart = useCallback(
+    (item: ProductProp): void => {
+      addToCart(item);
+      toast.info(`${item.nome} adicionado ao carrinho.`);
+    },
+    [addToCart]
+  );
 
-  function handleAddToCart(item: IProduct): void {
-    addToCart(item);
+  if (loading) {
+    return <Loading />;
   }
-
-  // const arrayImgs = {
-  //   'hamburgues': '',
-  //   'refri': ''
-  // }
-
 
   return (
     <>
-    <Header title="Produtos" />
+      <HeaderContainer>
+        <button
+          type="button"
+          onClick={() => {
+            window.history.back();
+          }}
+        >
+          <MdArrowBack size={20} color="#c53030" />
+        </button>
+        <Header title="Produtos" />
+      </HeaderContainer>
       <ProductList>
-      {products && products.map((item) => (
-        <li key={item.id}>
-          <h2>{item.nome}</h2>
-          {/* <img src={arrayImgs[item.nome]} alt=""/> */}
-          <strong>Preço: ${item.preco}</strong>
-          <p>{item.descricao}</p>
-          <button onClick={() => handleAddToCart(item)}>Adicionar ao carrinho</button>
-        </li>
-      ))}
-      <FloatingCart />
-    </ProductList>
+        {products &&
+          products.map((item) => (
+            <li key={item.id}>
+              <h2>{item.nome}</h2>
+              <strong>Preço: {formatMoney(item.preco)}</strong>
+              <p>{item.descricao}</p>
+              <button type="button" onClick={() => handleAddToCart(item)}>
+                Adicionar ao carrinho
+              </button>
+            </li>
+          ))}
+        <FloatingCart />
+      </ProductList>
     </>
   );
-}
-
-
-const Products = withRouter(ProductsComponent);
-
+};
 
 export default Products;

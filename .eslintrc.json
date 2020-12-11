@@ -29,6 +29,8 @@
     "prettier"
   ],
   "rules": {
+    "react/prop-types": "off",
+    "no-alert": "off",
     "prettier/prettier": "error",
     "react/jsx-one-expression-per-line": "off",
     "react/jsx-props-no-spreading": "off",

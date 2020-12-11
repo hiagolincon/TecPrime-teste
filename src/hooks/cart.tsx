@@ -6,6 +6,9 @@ import React, {
   useEffect,
 } from 'react';
 
+import { useHistory } from 'react-router-dom';
+import { toast } from 'react-toastify';
+
 interface Product {
   id: string;
   nome: string;
@@ -20,6 +23,8 @@ interface CartContext {
   addToCart(item: Omit<Product, 'quantity'>): void;
   increment(id: string): void;
   decrement(id: string): void;
+  finalizate(): void;
+  deleteItem(id: string): void;
 }
 
 const CartContext = createContext<CartContext | null>(null);
@@ -27,32 +32,34 @@ const CartContext = createContext<CartContext | null>(null);
 const CartProvider: React.FC = ({ children }) => {
   const [products, setProducts] = useState<Product[]>([]);
 
+  const history = useHistory();
+
   useEffect(() => {
-    async function loadProducts(): Promise<void> {
-      const storageProducts = await localStorage.getItem('@GoMP:products');
+    const loadProducts = async (): Promise<void> => {
+      const storageProducts = localStorage.getItem('@HiagoFood:products');
 
       if (storageProducts) {
         setProducts(JSON.parse(storageProducts));
       }
-    }
+    };
 
     loadProducts();
   }, []);
 
   const addToCart = useCallback(
-    async product => {
-      const productExists = products.some(p => p.id === product.id);
+    (product) => {
+      const productExists = products.some((p) => p.id === product.id);
 
       if (productExists) {
-        const newProducts = products.map(p =>
-          p.id === product.id ? { ...p, quantidade: p.quantidade + 1 } : p,
+        const newProducts = products.map((p) =>
+          p.id === product.id ? { ...p, quantidade: p.quantidade + 1 } : p
         );
 
         setProducts(newProducts);
 
-        await localStorage.setItem(
-          '@GoMP:products',
-          JSON.stringify(newProducts),
+        localStorage.setItem(
+          '@HiagoFood:products',
+          JSON.stringify(newProducts)
         );
         return;
       }
@@ -61,53 +68,76 @@ const CartProvider: React.FC = ({ children }) => {
 
       setProducts([...products, newProduct]);
 
-      await localStorage.setItem(
-        '@GoMP:products',
-        JSON.stringify([...products, newProduct]),
+      localStorage.setItem(
+        '@HiagoFood:products',
+        JSON.stringify([...products, newProduct])
       );
     },
-    [products],
+    [products]
   );
 
   const increment = useCallback(
-    async id => {
-      const newProducts = products.map(p =>
-        p.id === id ? { ...p, quantidade: p.quantidade + 1 } : p,
+    (id) => {
+      const newProducts = products.map((p) =>
+        p.id === id ? { ...p, quantidade: p.quantidade + 1 } : p
       );
 
       setProducts(newProducts);
 
-      await localStorage.setItem('@GoMP:products', JSON.stringify(newProducts));
+      localStorage.setItem('@HiagoFood:products', JSON.stringify(newProducts));
     },
-    [products],
+    [products]
   );
 
   const decrement = useCallback(
-    async id => {
-      const newProducts = products.map(p =>
-        p.id === id ? { ...p, quantidade: p.quantidade - 1 } : p,
+    async (id) => {
+      const newProducts = products.map((p) =>
+        p.id === id ? { ...p, quantidade: p.quantidade - 1 } : p
       );
 
       const filterProducts = newProducts.filter(
-        p => !(p.id === id && p.quantidade === 0),
+        (p) => !(p.id === id && p.quantidade === 0)
       );
 
       setProducts(filterProducts);
 
-      await localStorage.setItem('@GoMP:products', JSON.stringify(newProducts));
+      localStorage.setItem('@HiagoFood:products', JSON.stringify(newProducts));
     },
-    [products],
+    [products]
+  );
+
+  const finalizate = useCallback(() => {
+    setProducts([]);
+    toast.success('Pedido finalizado com sucesso. Obrigado 🍔');
+    history.push('/');
+    localStorage.removeItem('@HiagoFood:products');
+  }, [history]);
+
+  const deleteItem = useCallback(
+    (id: string) => {
+      const newProducts = products.filter((p) => p.id !== id);
+      setProducts(newProducts);
+      localStorage.setItem('@HiagoFood:products', JSON.stringify(newProducts));
+    },
+    [products]
   );
 
   const value = React.useMemo(
-    () => ({ addToCart, increment, decrement, products }),
-    [products, addToCart, increment, decrement],
+    () => ({
+      addToCart,
+      increment,
+      decrement,
+      products,
+      finalizate,
+      deleteItem,
+    }),
+    [products, addToCart, increment, decrement, finalizate, deleteItem]
   );
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
 };
 
-function useCart(): CartContext {
+const useCart = (): CartContext => {
   const context = useContext(CartContext);
 
   if (!context) {
@@ -115,6 +145,6 @@ function useCart(): CartContext {
   }
 
   return context;
-}
+};
 
 export { CartProvider, useCart };

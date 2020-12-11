@@ -1,44 +1,103 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<h1 align="center">
+    Hiago Food
+</h1>
 
-## Available Scripts
+<p align="center">
+  <a href="#computer-projeto">Projeto</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#rocket-tecnologias">Tecnologias</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#art-layout">Layout</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#gear-como-executar">Como executar</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+</p>
 
-In the project directory, you can run:
+<br/>
 
-### `yarn start`
+## :computer: Projeto
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Essa aplicação é o resultado de um teste passado pela Empre...
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
 
-### `yarn test`
+<br/>
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## :rocket: Tecnologias
+Esse projeto foi desenvolvido com as seguintes tecnologias:
 
-### `yarn build`
+#### Front-end
+- [ReactJS](https://github.com/facebook/react)
+- [TypeScript](https://github.com/microsoft/TypeScript)
+- [styled-components](https://github.com/styled-components/styled-components)
+- [axios](https://github.com/axios/axios)
+- [ESLint](https://github.com/eslint/eslint)
+- [Prettier](https://github.com/prettier/prettier)
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+#### Back-end
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+- [Node.js](https://nodejs.org/en)
+- [TypeScript](https://github.com/microsoft/TypeScript)
+- [Express](https://github.com/expressjs/express)
+- [TypeORM](https://github.com/typeorm/typeorm)
+- [ESLint](https://github.com/eslint/eslint)
+- [Prettier](https://github.com/prettier/prettier)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+<br/>
 
-### `yarn eject`
+## :art: Layout
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+O layout pode ser acessado através da página do Figma, [neste link](https://www.figma.com/file/VgK3hsmyGbqiGu9FdqfUzF/GoMarketplace?node-id=0%3A1).
+Você precisará uma conta (gratuita) no Figma pra inspecionar o layout e obter detalhes de cores, tamanhos, etc.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+<br/>
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+### :gear: Como executar
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
-## Learn More
+```bash
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+    # Clonar o repositório
+    $ git clone https://github.com/arielff3/desafio07-gofinances
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+    # Navegar para o diretório
+    $ cd desafio07-gofinances
+
+```
+#### Back-end
+
+- No arquivo [ormconfig.json](ormconfig.json) configure os parâmetros de acesso ao banco de dados (username, password e database);
+
+- No arquivo [src/database/index.jsormconfig.json](src/database/index.jsormconfig.json) o nome do banco de dados dos testes (gofinances_tests);
+
+- Para alterações do banco de dados aconselha-se utilizar a CLI do TypeORM: <code>yarn typeorm {seu comando}</code>. Confira a documentação [aqui](https://typeorm.io/).
+
+```bash
+
+    # Instalar as dependências
+    $ yarn
+
+    # Executar migrations para criação das tabelas nas base de dados
+    $ yarn typeorm migration:run
+
+    # Iniciar o projeto
+    $ yarn start
+
+    # Iniciar o projeto em desenvolvimento
+    $ yarn dev:server
+
+    # Executar testes
+    $ yarn test
+```
+
+#### Front-end
+
+```bash
+
+    # instalar as dependências
+    $ yarn
+
+    # Iniciar o projeto
+    $ yarn start
+
+    # Executar testes
+    $ yarn test
+
+    # Executar build
+    $ yarn build
+```

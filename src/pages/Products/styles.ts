@@ -19,18 +19,18 @@ export const ProductList = styled.ul`
       max-width: 750px;
     }
 
-     h2 {
+    h2 {
       font-size: 16px;
       line-height: 20px;
       color: #333;
       margin-top: 5px;
       text-align: center;
     }
-     strong {
+    strong {
       margin: 10px 0 5px;
     }
 
-     p {
+    p {
       color: #333;
     }
 
@@ -43,7 +43,7 @@ export const ProductList = styled.ul`
       overflow: hidden;
       padding: 12px;
       font-size: 16px;
-      font-weight:700;
+      font-weight: 700;
 
       display: flex;
       align-items: center;
@@ -54,6 +54,21 @@ export const ProductList = styled.ul`
         background: ${darken(0.07, '#c53030')};
       }
     }
+  }
+`;
 
+export const HeaderContainer = styled.div`
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  button {
+    position: absolute;
+    left: 0;
+    background: transparent;
+    border: 0;
+    display: flex;
+    align-items: center;
   }
 `;

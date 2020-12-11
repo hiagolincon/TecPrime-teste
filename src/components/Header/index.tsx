@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { Container } from './styles';
 
 interface TitleProps {
@@ -12,6 +11,6 @@ const Header: React.FC<TitleProps> = ({ title }) => {
       <h1>{title}</h1>
     </Container>
   );
-}
+};
 
 export default Header;

@@ -30,11 +30,18 @@ export const Container = styled.div`
 `;
 export const HeaderContainer = styled.div`
   position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-    a {
-      position: absolute;
-      top: 15px;
-    }
+  button {
+    position: absolute;
+    left: 0;
+    background: transparent;
+    border: 0;
+    display: flex;
+    align-items: center;
+  }
 `;
 
 export const ProductTable = styled.table`
@@ -87,6 +94,7 @@ export const ProductTable = styled.table`
     padding: 6px;
   }
 `;
+
 export const Total = styled.div`
   display: flex;
   align-items: baseline;
@@ -98,5 +106,39 @@ export const Total = styled.div`
   strong {
     font-size: 28px;
     margin-left: 5px;
+  }
+`;
+
+export const ContainerEmpty = styled.div`
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+
+  span {
+    font-size: 20px;
+    color: #fff;
+  }
+
+  button {
+    background: #fff;
+    color: #c53030;
+    border: 0;
+    border-radius: 4px;
+    padding: 12px 20px;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: background 0.2s;
+
+    &:hover {
+      background: ${darken(0.03, '#c53030')};
+      color: #fff;
+    }
+  }
+
+  svg {
+    width: 300px;
+    height: 300px;
   }
 `;
