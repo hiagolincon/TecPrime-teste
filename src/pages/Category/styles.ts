@@ -42,4 +42,8 @@ export const CategoryList = styled.ul`
       transition: color 0.2s;
     }
   }
+
+  @media screen and (max-width: 600px) {
+    grid-template-columns: 100%;
+  }
 `;

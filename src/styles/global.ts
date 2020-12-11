@@ -15,6 +15,7 @@ export default createGlobalStyle`
 
     &::-webkit-scrollbar-thumb {
       background-color: #fff;
+      border-radius: 10px;
     }
     &::-webkit-scrollbar-track {
       background-color: #c53030;

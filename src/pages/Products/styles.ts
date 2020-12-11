@@ -55,6 +55,9 @@ export const ProductList = styled.ul`
       }
     }
   }
+  @media screen and (max-width: 600px) {
+    grid-template-columns: 100%;
+  }
 `;
 
 export const HeaderContainer = styled.div`
